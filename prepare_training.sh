@@ -19,6 +19,7 @@ fi
 echo "** Install requirements"
 # "gdown" is for downloading files from GoogleDrive
 pip3 install --user gdown > /dev/null
+pip3 install --upgrade gdown > /dev/null
 
 echo "** Copy files for training"
 ln -sf $(readlink -f data/${CROWDHUMAN}) darknet/data/
@@ -29,7 +30,7 @@ cp cfg/*.cfg darknet/cfg/
 if [[ ! -f darknet/yolov4.conv.137 ]]; then
   pushd darknet > /dev/null
   echo "** Download pre-trained yolov4 weights"
-  python3 -m gdown.cli https://drive.google.com/uc?id=1JKF-bdIklxOOVy-2Cr5qdvjgGpmGfcbp
+  python3 -m gdown.cli https://drive.google.com/uc?id=12KJMpNRwQ1Mjq-sqRtorI80hofI9aoGC
   popd > /dev/null
 fi
 

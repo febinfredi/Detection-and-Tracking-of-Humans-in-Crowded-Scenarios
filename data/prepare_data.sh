@@ -18,6 +18,7 @@ fi
 echo "** Install requirements"
 # "gdown" is for downloading files from GoogleDrive
 pip3 install --user gdown > /dev/null
+pip3 install --upgrade gdown > /dev/null
 
 # make sure to download dataset files to "yolov4_crowdhuman/data/raw/"
 mkdir -p $(dirname $0)/raw
@@ -35,14 +36,15 @@ get_file()
 }
 
 echo "** Download dataset files"
-get_file https://drive.google.com/uc?id=134QOvaatwKdy0iIeNqA_p-xkAhkV4F8Y CrowdHuman_train01.zip
-get_file https://drive.google.com/uc?id=17evzPh7gc1JBNvnW1ENXLy5Kr4Q_Nnla CrowdHuman_train02.zip
-get_file https://drive.google.com/uc?id=1tdp0UCgxrqy1B6p8LkR-Iy0aIJ8l4fJW CrowdHuman_train03.zip
-get_file https://drive.google.com/uc?id=18jFI789CoHTppQ7vmRSFEdnGaSQZ4YzO CrowdHuman_val.zip
-# test data is not needed...
-# get_file https://drive.google.com/uc?id=1tQG3E_RrRI4wIGskorLTmDiWHH2okVvk CrowdHuman_test.zip
-get_file https://drive.google.com/u/0/uc?id=1UUTea5mYqvlUObsC1Z8CFldHJAtLtMX3 annotation_train.odgt
-get_file https://drive.google.com/u/0/uc?id=10WIRwu8ju8GRLuCkZ_vT6hnNxs5ptwoL annotation_val.odgt
+# train set
+gdown https://drive.google.com/uc?id=1YH6GRiicbvCmEzH1DJG9YDyI48QO66Vw
+gdown https://drive.google.com/uc?id=1jpBn27IxgVFTWraIqeHddqHU_5Z_wWGj
+gdown https://drive.google.com/uc?id=1UX0Q0-yhlKaCJkrpRbB5Fz7uAYAR-sej
+# val set
+gdown https://drive.google.com/uc?id=1oBIV33q9d2xg0XwSb6hRWYuVPFyMhCCr
+# .odgt files
+gdown https://drive.google.com/uc?id=1EvdshfVnj91NniHgAkCrNEBL9nm9XIKD
+gdown https://drive.google.com/uc?id=1UFXXygn0yKbBrPvhbpcANS5O0SptAg8n
 
 # unzip image files (ignore CrowdHuman_test.zip for now)
 echo "** Unzip dataset files"

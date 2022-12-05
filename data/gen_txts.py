@@ -1,7 +1,6 @@
 """gen_txts.py
 
 To generate YOLO txt files from the original CrowdHuman annotations.
-Please also refer to README.md in this directory.
 
 Inputs:
     * raw/annotation_train.odgt

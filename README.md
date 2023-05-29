@@ -14,7 +14,7 @@ Steps:
 
 Note:
 
-* Make sure to upload all the CrowdHuman dataset in your google drive and paste the dataset links in [prepare_training.sh](prepare_training.sh) repare_training.sh file (line 40 - 47) as the drive link from the dataset authors doesn't work anymore.
+* Make sure to upload all the CrowdHuman dataset in your google drive and paste the dataset links in [prepare_training.sh](prepare_training.sh) file (line 40 - 47) as the drive link from the dataset authors doesn't work anymore.
 
 * Make sure to change your runtime to GPU.
 

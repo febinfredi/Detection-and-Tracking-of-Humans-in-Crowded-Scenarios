@@ -1,19 +1,18 @@
-#!/bin/bash
+# !/bin/bash
 
 set -e
 
 # check argument
 if [[ -z $1 || ! $1 =~ [[:digit:]]x[[:digit:]] ]]; then
   echo "ERROR: This script requires 1 argument, \"input dimension\" of the YOLO model."
-  echo "The input dimension should be {width}x{height} such as 608x608 or 416x256.".
+  echo "The input dimension should be {width}x{height}".
   exit 1
 fi
 
-CROWDHUMAN=crowdhuman-$1
-
-if [[ ! -f data/${CROWDHUMAN}/train.txt || ! -f data/${CROWDHUMAN}/test.txt ]]; then
-  echo "ERROR: missing txt file in data/${CROWDHUMAN}/"
-  exit 1
+if which python3 > /dev/null; then
+  PYTHON=python3
+else
+  PYTHON=python
 fi
 
 echo "** Install requirements"
@@ -21,17 +20,49 @@ echo "** Install requirements"
 pip3 install --user gdown > /dev/null
 pip3 install --upgrade gdown > /dev/null
 
-echo "** Copy files for training"
-ln -sf $(readlink -f data/${CROWDHUMAN}) darknet/data/
-cp data/${CROWDHUMAN}.data darknet/data/
-cp data/crowdhuman.names darknet/data/
-cp cfg/*.cfg darknet/cfg/
+# make sure to download dataset files to "YOLOv4_CrowdHuman/data/raw/"
+mkdir -p $(dirname $0)/raw
+pushd $(dirname $0)/raw > /dev/null
 
-if [[ ! -f darknet/yolov4.conv.137 ]]; then
-  pushd darknet > /dev/null
-  echo "** Download pre-trained yolov4 weights"
-  python3 -m gdown.cli https://drive.google.com/uc?id=12KJMpNRwQ1Mjq-sqRtorI80hofI9aoGC
-  popd > /dev/null
-fi
+get_file()
+{
+  # do download only if the file does not exist
+  if [[ -f $2 ]];  then
+    echo Skipping $2
+  else
+    echo Downloading $2...
+    python3 -m gdown.cli $1
+  fi
+}
+
+echo "** Download dataset files"
+# train set
+gdown https://drive.google.com/uc?id=1YH6GRiicbvCmEzH1DJG9YDyI48QO66Vw
+gdown https://drive.google.com/uc?id=1jpBn27IxgVFTWraIqeHddqHU_5Z_wWGj
+gdown https://drive.google.com/uc?id=1UX0Q0-yhlKaCJkrpRbB5Fz7uAYAR-sej
+# val set
+gdown https://drive.google.com/uc?id=1oBIV33q9d2xg0XwSb6hRWYuVPFyMhCCr
+# .odgt files
+gdown https://drive.google.com/uc?id=1EvdshfVnj91NniHgAkCrNEBL9nm9XIKD
+gdown https://drive.google.com/uc?id=1UFXXygn0yKbBrPvhbpcANS5O0SptAg8n
+
+# unzip image files (ignore CrowdHuman_test.zip for now)
+echo "** Unzip dataset files"
+for f in CrowdHuman_train01.zip CrowdHuman_train02.zip CrowdHuman_train03.zip CrowdHuman_val.zip ; do
+  unzip -n ${f}
+done
+
+echo "** Create the crowdhuman-$1/ subdirectory"
+rm -rf ../crowdhuman-$1/
+mkdir ../crowdhuman-$1/
+ln Images/*.jpg ../crowdhuman-$1/
+
+# the crowdhuman/ subdirectory now contains all train/val jpg images
+
+echo "** Generate yolo txt files"
+cd ..
+${PYTHON} gen_txts.py $1
+
+popd > /dev/null
 
 echo "** Done."

@@ -16,4 +16,4 @@ Steps:
 ## Results:
 
 Running model on a sample crowd video
-![Alt text](test_video.mp4)          !
+<video src='[your URL here](https://github.com/febinfredi/Detection-and-Tracking-of-Humans-in-Crowded-Scenarios/blob/main/test_video.mp4)' width=180/>

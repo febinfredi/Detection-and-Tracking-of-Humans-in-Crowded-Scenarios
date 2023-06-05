@@ -1,4 +1,4 @@
-## Detection of humans in crowd scenarios
+## Detection and Tracking of humans in crowd scenarios
 
 ## Abstract
 The main target of this project is to create and train a model to be able to detect humans in crowded scenarios. YOLOv4 model has been used for this task and was trained on CrowdHuman dataset which was specifically created for this purpose. Initial EDA was performed on the data and then YOLOv4 model was trained on this dataset and the evaluation was done by looking at accuracy, training loss and mAP scores. 
@@ -21,4 +21,4 @@ Note:
 ## Results:
 
 Running model on a sample crowd video (Click on the image to watch the video): 
-[<img src="https://img.youtube.com/vi/Jt7aZ-YmCno/maxresdefault.jpg" width="50%">](https://youtu.be/Jt7aZ-YmCno)
+[<img src="https://img.youtube.com/vi/Jt7aZ-YmCno/maxresdefault.jpg" width="100%">](https://youtu.be/Jt7aZ-YmCno)
